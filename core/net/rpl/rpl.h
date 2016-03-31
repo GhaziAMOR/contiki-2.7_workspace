@@ -111,9 +111,9 @@ struct rpl_dag;
 struct rpl_parent {
   struct rpl_parent *next;
   struct rpl_dag *dag;
-#if RPL_DAG_MC != RPL_DAG_MC_NONE
+//#if RPL_DAG_MC != RPL_DAG_MC_NONE
   rpl_metric_container_t mc;
-#endif /* RPL_DAG_MC != RPL_DAG_MC_NONE */
+//#endif /* RPL_DAG_MC != RPL_DAG_MC_NONE */
   rpl_rank_t rank;
   uint16_t link_metric;
   uint8_t dtsn;

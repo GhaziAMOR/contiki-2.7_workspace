@@ -44,7 +44,7 @@
 
 #include "contiki.h"
 #include "contiki-lib.h"
-
+ #include "sys/etimer.h"
 #include "net/rime.h"
 
 #include "shell.h"
@@ -435,20 +435,24 @@ PROCESS_THREAD(shell_process, ev, data)
   static struct process *started_process;
   struct shell_input *input;
   int ret;
+  static struct etimer et ;
   PROCESS_BEGIN();
-
+  etimer_set(&et, CLOCK_SECOND*40); /***delay*/
   /* Let the system start up before showing the prompt. */
-  PROCESS_PAUSE();
-  
-  while(1) {
+ PROCESS_PAUSE();
+  PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+  //while(1) {
     shell_prompt(shell_prompt_text);
     
-    PROCESS_WAIT_EVENT_UNTIL(ev == shell_event_input);
-    {
+    //PROCESS_WAIT_EVENT_UNTIL(ev == shell_event_input);{
       input = data;
-      ret = shell_start_command(input->data1, input->len1, NULL,
-				&started_process);
 
+
+     // ret = shell_start_command(input->data1, input->len1, NULL,
+		//		&started_process);
+
+      char * yes = "rime-ping 1.0";
+      ret = shell_start_command(yes,14,NULL,&started_process);
       if(started_process != NULL &&
 	 ret == SHELL_FOREGROUND &&
 	 process_is_running(started_process)) {
@@ -457,8 +461,8 @@ PROCESS_THREAD(shell_process, ev, data)
 				 data == started_process);
       }
       front_process = &shell_process;
-    }
-  }
+    //}
+  //}
   
   PROCESS_END();
 }

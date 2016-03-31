@@ -41,7 +41,7 @@
 #include "shell.h"
 #include "serial-shell.h"
 #include "collect-view.h"
-
+ #include "sys/etimer.h"
 #include "net/rime.h"
 
 /*---------------------------------------------------------------------------*/
@@ -61,36 +61,36 @@ periodic_debug(void *ptr)
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(sky_shell_process, ev, data)
 {
+	static struct etimer et;
   PROCESS_BEGIN();
-
+  etimer_set(&et, CLOCK_SECOND*40); /***delay*/
 #if WITH_PERIODIC_DEBUG
   ctimer_set(&debug_timer, 20 * CLOCK_SECOND, periodic_debug, NULL);
 #endif /* WITH_PERIODIC_DEBUG */
 
   serial_shell_init();
-  shell_blink_init();
+  //shell_blink_init();
   /*  shell_file_init();
       shell_coffee_init();*/
-  /*  shell_download_init();
-      shell_rime_sendcmd_init();*/
+  /*  shell_download_init();*/
+  //shell_rime_sendcmd_init();
   /*  shell_ps_init();*/
-  shell_reboot_init();
+  //shell_reboot_init();
   shell_rime_init();
-  shell_rime_netcmd_init();
-  /*  shell_rime_ping_init();
-  shell_rime_debug_init();
+  //shell_rime_netcmd_init();
+    shell_rime_ping_init();
+ /* shell_rime_debug_init();
   shell_rime_debug_runicast_init();*/
   /*  shell_rime_sniff_init();*/
-  shell_sky_init();
-  shell_power_init();
-  shell_powertrace_init();
+  //shell_sky_init();
+  //shell_power_init();
+  //shell_powertrace_init();
   /*  shell_base64_init();*/
-  shell_text_init();
-  shell_time_init();
-  /*  shell_checkpoint_init();*/
+  //shell_text_init();
+  //shell_time_init();
   /*  shell_sendtest_init();*/
 
-  shell_collect_view_init();
+  //shell_collect_view_init();
 
 #if DEBUG_SNIFFERS
   rime_sniffer_add(&s);

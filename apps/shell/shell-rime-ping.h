@@ -39,7 +39,7 @@
 
 #ifndef __SHELL_RIME_PING_H__
 #define __SHELL_RIME_PING_H__
-
+PROCESS_NAME(hello_world_process);
 void shell_rime_ping_init(void);
 
 #endif /* __SHELL-RIME_-PING_H__ */

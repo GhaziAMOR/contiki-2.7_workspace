@@ -37,12 +37,12 @@
  *         Adam Dunkels <adam@sics.se>
  */
 
-
+#include "contiki.h"
 #include "shell.h"
 #include "net/rime.h"
-
 #include <string.h>
 #include <stdio.h>
+
 #ifndef HAVE_SNPRINTF
 int snprintf(char *str, size_t size, const char *format, ...);
 #endif /* HAVE_SNPRINTF */
@@ -54,7 +54,7 @@ struct rime_ping_msg {
 
 static struct mesh_conn mesh;
 static int waiting_for_pong = 0;
-
+ unsigned long latency ;
 /*---------------------------------------------------------------------------*/
 PROCESS(shell_rime_ping_process, "rime-ping");
 SHELL_COMMAND(rime_ping_command,
@@ -85,7 +85,7 @@ PROCESS_THREAD(shell_rime_ping_process, ev, data)
   snprintf(buf, sizeof(buf), "%d.%d", receiver.u8[0], receiver.u8[1]);
   shell_output_str(&rime_ping_command, "Sending 4 pings to ", buf);
 
-  for(i = 0; i < 4; ++i) {
+// for(i = 0; i < 4; ++i) {
     packetbuf_clear();
     ping = packetbuf_dataptr();
     packetbuf_set_datalen(sizeof(struct rime_ping_msg));
@@ -108,7 +108,7 @@ PROCESS_THREAD(shell_rime_ping_process, ev, data)
 		       "Timed out", "");
     }
     waiting_for_pong = 0;
-  }
+//  }
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/
@@ -121,6 +121,7 @@ static void
 sent_mesh(struct mesh_conn *c)
 {
 }
+
 static void
 recv_mesh(struct mesh_conn *c, const rimeaddr_t *from, uint8_t hops)
 {
@@ -144,7 +145,10 @@ recv_mesh(struct mesh_conn *c, const rimeaddr_t *from, uint8_t hops)
 #else
     pingrecvtime = rtimer_arch_now();
 #endif
-    snprintf(buf, sizeof(buf), "%lu ms (%lu + %lu), %d hops.",
+char data[] = "msg";
+latency = (1000L * (pingrecvtime - ping.pingtime)) / RTIMER_ARCH_SECOND ;
+process_post(&hello_world_process,PROCESS_EVENT_CONTINUE,latency);
+     snprintf(buf, sizeof(buf), "%lu ms (%lu + %lu), %d hops.",
 	    (1000L * (pingrecvtime - ping.pingtime)) / RTIMER_ARCH_SECOND,
 	    (1000L * (ping.pongtime - ping.pingtime)) / RTIMER_ARCH_SECOND,
 	    (1000L * (pingrecvtime - ping.pongtime)) / RTIMER_ARCH_SECOND,
@@ -167,4 +171,3 @@ shell_rime_ping_init(void)
 
   shell_register_command(&rime_ping_command);
 }
-/*---------------------------------------------------------------------------*/
