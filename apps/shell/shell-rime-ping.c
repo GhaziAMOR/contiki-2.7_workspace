@@ -83,9 +83,9 @@ PROCESS_THREAD(shell_rime_ping_process, ev, data)
   receiver.u8[1] = shell_strtolong(nextptr, &nextptr);
 
   snprintf(buf, sizeof(buf), "%d.%d", receiver.u8[0], receiver.u8[1]);
-  shell_output_str(&rime_ping_command, "Sending 4 pings to ", buf);
+  shell_output_str(&rime_ping_command, "Sending 1 ping to ", buf);
 
-// for(i = 0; i < 4; ++i) {
+//  for(i = 0; i < 4; ++i) {
     packetbuf_clear();
     ping = packetbuf_dataptr();
     packetbuf_set_datalen(sizeof(struct rime_ping_msg));
@@ -108,7 +108,7 @@ PROCESS_THREAD(shell_rime_ping_process, ev, data)
 		       "Timed out", "");
     }
     waiting_for_pong = 0;
-//  }
+  //}
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/

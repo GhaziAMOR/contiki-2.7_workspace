@@ -128,6 +128,8 @@ force_inclusion(int d1, int d2)
 }
 #endif
 /*---------------------------------------------------------------------------*/
+
+rimeaddr_t rime_addr_global ;
 static void
 set_rime_addr(void)
 {
@@ -151,8 +153,10 @@ set_rime_addr(void)
   printf("Rime started with address ");
   for(i = 0; i < sizeof(addr.u8) - 1; i++) {
     printf("%d.", addr.u8[i]);
+    rime_addr_global.u8[i] = addr.u8[i];
   }
   printf("%d\n", addr.u8[i]);
+  rime_addr_global.u8[i] = addr.u8[i];
 }
 /*---------------------------------------------------------------------------*/
 #if !PROCESS_CONF_NO_PROCESS_NAMES
@@ -394,7 +398,6 @@ main(int argc, char **argv)
   ENERGEST_ON(ENERGEST_TYPE_CPU);
 
   watchdog_start();
-
 #if !PROCESS_CONF_NO_PROCESS_NAMES
   print_processes(autostart_processes);
 #else /* !PROCESS_CONF_NO_PROCESS_NAMES */

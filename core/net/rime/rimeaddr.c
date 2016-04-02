@@ -71,7 +71,9 @@ rimeaddr_cmp(const rimeaddr_t *addr1, const rimeaddr_t *addr2)
 void
 rimeaddr_set_node_addr(rimeaddr_t *t)
 {
-  rimeaddr_copy(&rimeaddr_node_addr, t);
+	printf("rime address_________________ %s : \n",t->u8);
+	rimeaddr_copy(&rimeaddr_node_addr, t);
+
 }
 /*---------------------------------------------------------------------------*/
 /** @} */

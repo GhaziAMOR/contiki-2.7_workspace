@@ -112,6 +112,12 @@ rpl_get_parent_ipaddr(rpl_parent_t *p)
   rimeaddr_t *lladdr = nbr_table_get_lladdr(rpl_parents, p);
   return uip_ds6_nbr_ipaddr_from_lladdr((uip_lladdr_t *)lladdr);
 }
+
+rimeaddr_t *rpl_get_parent_rimeaddr(rpl_parent_t *p)
+{
+	rimeaddr_t *lladdr = nbr_table_get_lladdr(rpl_parents, p);
+	return lladdr ;
+}
 /*---------------------------------------------------------------------------*/
 static void
 rpl_set_preferred_parent(rpl_dag_t *dag, rpl_parent_t *p)

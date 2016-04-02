@@ -28,7 +28,11 @@
  * No application for this example, this file is a place holder
  */
 #include "contiki.h"
-//#include <stdio.h>
+#include "sys/process.h"
+#include <stdio.h> /* For printf() */
+#include "shell.h"
+#include "sys/etimer.h"
+
 
 /*---------------------------------------------------------------------------*/
 PROCESS(init_stack_process, "Init stack process");
@@ -36,6 +40,9 @@ PROCESS(init_stack_process, "Init stack process");
 PROCESS_THREAD(init_stack_process, ev, data)
 {
   PROCESS_BEGIN();
+
+	serial_shell_init();
+	shell_ping_init();
   //printf("WARNING: Running Contiki without application\n");
   PROCESS_END();
 }

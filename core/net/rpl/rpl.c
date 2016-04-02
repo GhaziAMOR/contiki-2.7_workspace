@@ -50,13 +50,12 @@
 
 #include <limits.h>
 #include <string.h>
-
+#include "shell.h"
 #if UIP_CONF_IPV6
 
 #if RPL_CONF_STATS
 rpl_stats_t rpl_stats;
 #endif
-
 /*---------------------------------------------------------------------------*/
 void
 rpl_purge_routes(void)
@@ -222,7 +221,6 @@ rpl_init(void)
   uip_ipaddr_t rplmaddr;
   PRINTF("RPL started\n");
   default_instance = NULL;
-
   rpl_dag_init();
   rpl_reset_periodic_timer();
 
@@ -235,4 +233,9 @@ rpl_init(void)
 #endif
 }
 /*---------------------------------------------------------------------------*/
+PROCESS_THREAD(ping_latency,"calculate latency")
+{
+
+}
+
 #endif /* UIP_CONF_IPV6 */

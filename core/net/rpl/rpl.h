@@ -39,7 +39,6 @@
 #define RPL_H
 
 #include "rpl-conf.h"
-
 #include "lib/list.h"
 #include "net/uip.h"
 #include "net/uip-ds6.h"
@@ -245,6 +244,7 @@ void rpl_insert_header(void);
 void rpl_remove_header(void);
 uint8_t rpl_invert_header(void);
 uip_ipaddr_t *rpl_get_parent_ipaddr(rpl_parent_t *nbr);
+rimeaddr_t *rpl_get_parent_rimeaddr(rpl_parent_t *p);
 rpl_rank_t rpl_get_parent_rank(uip_lladdr_t *addr);
 uint16_t rpl_get_parent_link_metric(uip_lladdr_t *addr);
 void rpl_dag_init(void);

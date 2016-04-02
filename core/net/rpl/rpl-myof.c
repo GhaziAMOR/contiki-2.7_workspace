@@ -4,7 +4,7 @@
 #define DEBUG DEBUG_FULL
 #include "net/uip-debug.h"
 
-
+extern rimeaddr_t rime_addr_global ;
 static void reset(rpl_dag_t *);
 static rpl_parent_t *best_parent(rpl_parent_t *, rpl_parent_t *);
 static rpl_dag_t *best_dag(rpl_dag_t *, rpl_dag_t *);
@@ -198,8 +198,20 @@ static void update_metric_container(rpl_instance_t *instance)
 
 	/*_____________________________________________________ DEBUG ______________________________________________________________________*/
 
+	printf("global address : ");
+	int po ;
+	for( po = 0; po < sizeof(rime_addr_global.u8) - 1; po++) {
+	    printf("%d.", rime_addr_global.u8[po]);}
+	printf("\n");
 
-					PRINTF("update_metric_container ");
+	printf("global address bel get el marra hedhi : ");
+	rimeaddr_t *global = rpl_get_parent_rimeaddr(p);
+	po = 0;
+
+	for( po = 0; po < sizeof(global->u8) - 1; po++) {
+		    printf("%d.", global->u8[po]);}
+		printf("\n");
+	PRINTF("update_metric_container ");
 					PRINT6ADDR(rpl_get_parent_ipaddr(p));
 					PRINTF(" (instance->current_dag->preferred_parent->mc.obj.hopcount %d, rank %d) \n",p->mc.obj.hopcount, p->rank);
 

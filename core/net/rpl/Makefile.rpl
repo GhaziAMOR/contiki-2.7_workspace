@@ -1,2 +1,3 @@
+APPS = serial-shell powertrace collect-view
 CONTIKI_SOURCEFILES += rpl.c rpl-dag.c rpl-icmp6.c rpl-timers.c \
 	rpl-myof.c rpl-ext-header.c

@@ -62,7 +62,7 @@
 
 
 
-
+PROCESS_NAME(shell_process);
 
 #include "sys/process.h"
 
