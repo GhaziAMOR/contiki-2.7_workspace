@@ -374,38 +374,12 @@ send_packet(mac_callback_t sent, void *ptr)
     PRINTF("csma: could not allocate neighbor, dropping packet\n");
   }
   mac_call_sent_callback(sent, ptr, MAC_TX_ERR, 1);
-  CCIF clock_time_t t2 = clock_time();
-  printf("FUCKKKKKK %d \n",(t2-t1) ); 
 }
 /*---------------------------------------------------------------------------*/
-PROCESS(test_count, "Example process");
-static int countPackets = 0 ,pass = 0 ;
-static struct etimer et ; 
-static struct ctimer ct ; 
-PROCESS_THREAD(test_count, ev, data)
- {
-   PROCESS_BEGIN();
-   while(1)
-   {
-   PROCESS_WAIT_EVENT();
-  // printf("in process !!!!! \n" );
-   countPackets ++ ;
-   }
-   PROCESS_END();
- }
- 
+
 
 static void input_packet(void)
 {
-	if(pass == 0 )
-	{
-		etimer_set(&et,CLOCK_SECOND*30);
-		process_start(&test_count,NULL);		
-	}
-	pass = 1 ; 
-	if (!etimer_expired(&et))
-	process_post(&test_count,PROCESS_EVENT_CONTINUE, NULL); 
-	PRINTF("besmellah -------- %d \n",countPackets);
 	NETSTACK_NETWORK.input();
 }
 /*---------------------------------------------------------------------------*/
